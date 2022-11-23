@@ -13,7 +13,7 @@
     <Main/>
   </div> -->
   {#each {length: 9} as _, index (index)}
-    <div class="overflow-hidden relative">
+    <div class="overflow-hidden relative borde" style:rotate="z {index * 90}de">
       <div class="absolute w-vw h-vw" style={getStyle(index)}>
         <Main/>
       </div>
