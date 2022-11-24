@@ -1,11 +1,29 @@
 <script lang="ts">
   export let text: string
+  export let side: 0 | 1 | 2 | 3
+  export let bgColor: string
+
+  const getPosition = (s: typeof side) => {
+    if (s === 0)
+      return 'bottom-3 top-auto'
+    if (s === 1)
+      return 'left-3 right-auto'
+    if (s === 2)
+      return 'top-3 bottom-auto'
+    return 'right-3 left-auto'
+  }
 </script>
 
-<div class="absolute text-xl bottom-3 left-0 right-0 group flex justify-center">
-  <button on:click class="group flex justify-center items-center relative bg-blue-800 shadow-2xl rounded-full">
-    <div class="icon rounded-full bg-white/30 group-hover:bg-white/40">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="2 1 26 30">
+<div class="absolute text-xl inset-0 {getPosition(side)} group flex justify-center {side % 2 === 0 ? 'flex-row' : 'flex-col'}">
+  <button
+    on:click
+    class="
+      group flex justify-center items-center relative {bgColor} shadow-2xl rounded-full w-fit h-fit p-[min(0.75rem,1vw)]
+      {side % 2 === 0 ? 'pr-5 flex-row' : 'pb-5 flex-col'}
+    "
+  >
+    <div class="icon rounded-full bg-white/30 group-hover:bg-white/40 grid place-items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="2 1 26 30" style="rotate: z {side * 90}deg">
         <path
           d="M 15 4 v 22 l-10 -10 l10 10 l10 -10"
           stroke="white"
@@ -16,7 +34,12 @@
         />
       </svg>
     </div>
-    <div class="text">{text}</div>
+    <div
+      class="text"
+      style:rotate="z {(side % 2) * 180}deg"
+      style:translate="{(side % 2) * -0.28}vw 0"
+      style:writing-mode={side % 2 === 0 ? 'horizontal-tb' : 'vertical-rl'}
+    >{text}</div>
   </button>
 </div>
 
@@ -31,8 +54,6 @@
     font-size: clamp(1rem, 1.4vw, 3rem);
   }
   button {
-    padding: min(0.75rem, 1vw);
-    padding-right: 1.25rem;
     gap: min(1rem, 1.4vw);
   }
 </style>
