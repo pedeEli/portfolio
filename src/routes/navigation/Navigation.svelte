@@ -8,7 +8,7 @@
     <div class="face bg-yellow-400 text-zinc-900" style="grid-area: yellow">About Me</div>
     <div class="face"                                 style="grid-area: orange">Navigation</div>
     <div class="face bg-zinc-200 text-zinc-900"   style="grid-area: white">Projects</div>
-    <div class="face bg-red-600"                    style="grid-area: red">Temp</div>
+    <div class="face bg-red-600"                    style="grid-area: red">Imprint</div>
     <div class="face bg-green-600"                  style="grid-area: green">About This Page</div>
   </div>
 </div>

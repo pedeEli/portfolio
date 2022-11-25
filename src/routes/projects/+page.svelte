@@ -8,4 +8,4 @@
   <Projects/>
 </Faces>
 <Arrow bgColor="bg-zinc-500" side={1} text="Navigation" href="/navigation"/>
-<Arrow bgColor="bg-zinc-500" side={3} text="Temp" href="/temp"/>
+<Arrow bgColor="bg-zinc-500" side={3} text="Imprint" href="/imprint"/>
