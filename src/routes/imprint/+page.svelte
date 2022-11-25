@@ -2,9 +2,12 @@
   import Faces from '$lib/Faces.svelte'
   import Imprint from './Imprint.svelte'
   import Arrow from '$lib/Arrow.svelte'
+  import {colors} from '$lib/colors'
+
+  const color = colors['imprint']
 </script>
 
-<Faces bgColor="bg-red-600">
+<Faces classes="{color.bg} {color.txt}">
   <Imprint/>
 </Faces>
-<Arrow bgColor="bg-red-800" side={1} text="Projects" href="/projects"/>
+<Arrow bgColor={color.btn} side={1} text="Projects" href="/projects"/>

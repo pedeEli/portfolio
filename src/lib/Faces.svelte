@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let bgColor: string
+  export let classes: string
 
   const getStyle = (index: number) => {
     const x = index % 3
@@ -8,7 +8,7 @@
   }
 </script>
 
-<div class="grid grid-cols-3 grid-rows-3 w-vw h-vw {bgColor}">
+<div class="grid grid-cols-3 grid-rows-3 w-vw h-vw {classes}">
   <div class="row-span-3 col-span-3">
     <slot/>
   </div>

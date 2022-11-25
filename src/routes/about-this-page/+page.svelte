@@ -2,9 +2,12 @@
   import Faces from '$lib/Faces.svelte'
   import About from './About.svelte'
   import Arrow from '$lib/Arrow.svelte'
+  import {colors} from '$lib/colors'
+
+  const color = colors['about-this-page']
 </script>
 
-<Faces bgColor="bg-green-600">
+<Faces classes="{color.bg} {color.txt}">
   <About/>
 </Faces>
-<Arrow bgColor="bg-green-800" side={2} text="Navigation" href="/navigation"/>
+<Arrow bgColor={color.btn} side={2} text="Navigation" href="/navigation"/>
