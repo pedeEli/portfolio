@@ -11,7 +11,7 @@
 	
 	export let pathname: string
 
-	const {flyIn, flyOut} = fly({duration: 600})
+	const {flyIn, flyOut} = fly({duration: 450})
 </script>
 
 {#key pathname}

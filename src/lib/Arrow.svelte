@@ -34,7 +34,7 @@
   <button
     on:click={() => {
       direction.set(sideToDirection(side))
-      goto(href)
+      goto(href, {noScroll: side % 2 === 1})
     }}
     class="
       group flex justify-center items-center relative {bgColor} shadow-2xl rounded-full w-fit h-fit p-[min(0.75rem,1vw)]

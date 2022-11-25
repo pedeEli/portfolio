@@ -17,58 +17,58 @@ interface FlyParams {
   duration: number
 }
 
+const easing = quadInOut
 export const fly = ({duration}: FlyParams): FlyReturn => {
 
   let distanceDown: number
   let distanceUp: number
 
   const flyOut: FlyReturn['flyOut'] = (element, {direction}) => {
-    if (direction === 'down') {
-      const {y, height} = element.getBoundingClientRect()
-      distanceDown = height + y
-  
-      return {
-        duration,
-        easing: quadInOut,
-        css: (t, u) => `top: ${y - distanceDown * u}px`
-      }
-    } else if (direction === 'up') {
-      const {y} = element.getBoundingClientRect()
-      const windowHeight = window.innerHeight
-      distanceUp = y
+    const windowWidth = window.innerWidth
+    const windowHeight = window.innerHeight
+    const {y, height} = element.getBoundingClientRect()
+    distanceDown = height + y
+    distanceUp = y
 
-      return {
-        duration,
-        easing: quadInOut,
-        css: (t, u) => `top: ${distanceUp + (windowHeight - distanceUp) * u}px`
-      }
+    const css: TransitionConfig['css'] = direction === 'down'
+      ? (t, u) => `top: ${y - distanceDown * u}px`
+      : direction === 'up'
+      ? (t, u) => `top: ${distanceUp * t + windowHeight * u}px`
+      : direction === 'left'
+      ? (t, u) => `left: ${windowWidth * u}px`
+      : (t, u) => `left: ${-windowWidth * u}px`
+
+    
+    return {
+      duration,
+      easing,
+      css
     }
-    return {}
   }
 
   const flyIn: FlyReturn['flyIn'] = (element, {direction}) => {
-    if (direction === 'down') {
-      return {
-        duration,
-        easing: quadInOut,
-        css: (t, u) => `top: ${distanceDown - t * distanceDown}px`
-      }
-    } else if (direction === 'up') {
-      const {height} = element.getBoundingClientRect()
-      const windowHeight = window.innerHeight
+    const windowWidth = window.innerWidth
+    const windowHeight = window.innerHeight
+    const {height} = element.getBoundingClientRect()
 
-      return {
-        duration,
-        easing: quadInOut,
-        css: (t, u) => `top: ${distanceUp - height + (windowHeight - distanceUp) * t}px`,
-        tick: (t, u) => {
-          if (t === 1) {
-            window.scrollTo({top: height})
-          }
-        }
-      }
+    const css: TransitionConfig['css'] = direction === 'down'
+      ? (t, u) => `top: ${distanceDown * u}px`
+      : direction === 'up'
+      ? (t, u) => `top: ${distanceUp * u - height + windowHeight * t}px`
+      : direction === 'left'
+      ? (t, u) => `left: ${-windowWidth * u}px`
+      : (t, u) => `left: ${windowWidth * u}px`
+
+    const tick: TransitionConfig['tick'] = direction === 'up'
+      ? (t, u) => t === 1 && window.scrollTo({top: height})
+      : undefined
+
+    return {
+      duration,
+      easing,
+      css,
+      tick
     }
-    return {}
   }
 
   return {
