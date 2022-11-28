@@ -16,6 +16,8 @@
 		"@sveltejs/kit": "next",
 		"autoprefixer": "^10.4.13",
 		"postcss": "^8.4.19",
+		"puppeteer": "^19.3.0",
+		"sharp": "^0.31.2",
 		"svelte": "^3.44.0",
 		"svelte-check": "^2.7.1",
 		"svelte-preprocess": "^4.10.6",
