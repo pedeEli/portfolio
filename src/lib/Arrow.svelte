@@ -1,9 +1,6 @@
 <script lang="ts">
   import {goto} from '$app/navigation'
 
-  import {direction} from '$lib/Transition.svelte'
-  import type {Direction} from '$lib/transition'
-
   import LL, {locale} from '$i18n/i18n-svelte'
 
   import type {Faces} from '$lib/colors'
@@ -22,24 +19,11 @@
       return 'top-3 bottom-auto'
     return 'right-3 left-auto'
   }
-
-  const sideToDirection = (s: typeof side): Direction => {
-    return s === 0
-      ? 'down'
-      : s === 1
-      ? 'left'
-      : s === 2
-      ? 'up'
-      : 'right'
-  }
 </script>
 
 <div class="absolute text-xl inset-0 {getPosition(side)} group flex justify-center {side % 2 === 0 ? 'flex-row' : 'flex-col'}">
   <button
-    on:click={() => {
-      direction.set(sideToDirection(side))
-      goto(`/${$locale}${href}`, {noScroll: side % 2 === 1})
-    }}
+    on:click={() => goto(`/${$locale}${href}`, {noScroll: side % 2 === 1})}
     class="
       group flex justify-center items-center relative {bgColor} shadow-2xl rounded-full w-fit h-fit p-[min(0.75rem,1vw)]
       {side % 2 === 0 ? 'pr-5 flex-row' : 'pb-5 flex-col'}
