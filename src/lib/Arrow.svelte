@@ -2,13 +2,12 @@
   import {goto} from '$app/navigation'
 
   import LL, {locale} from '$i18n/i18n-svelte'
+  import {faceUrlToColor} from '$lib/constants'
 
-  import type {Faces} from '$lib/colors'
-  
-  export let text: Faces
   export let side: 0 | 1 | 2 | 3
   export let bgColor: string
-  export let href: string
+  export let href: FaceURL
+  const color = faceUrlToColor[href]
 
   const getPosition = (s: typeof side) => {
     if (s === 0)
@@ -23,7 +22,7 @@
 
 <div class="absolute text-xl inset-0 {getPosition(side)} group flex justify-center {side % 2 === 0 ? 'flex-row' : 'flex-col'}">
   <button
-    on:click={() => goto(`/${$locale}${href}`, {noScroll: side % 2 === 1})}
+    on:click={() => goto(`/${$locale}/${href}`, {noScroll: side % 2 === 1})}
     class="
       group flex justify-center items-center relative {bgColor} shadow-2xl rounded-full w-fit h-fit p-[min(0.75rem,1vw)]
       {side % 2 === 0 ? 'pr-5 flex-row' : 'pb-5 flex-col'}
@@ -46,7 +45,7 @@
       style:rotate="z {(side % 2) * 180}deg"
       style:translate="{(side % 2) * -0.28}vw 0"
       style:writing-mode={side % 2 === 0 ? 'horizontal-tb' : 'vertical-rl'}
-    >{$LL[text]()}</div>
+    >{$LL[color]()}</div>
   </button>
 </div>
 

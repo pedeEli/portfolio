@@ -25,27 +25,27 @@ type RootTranslation = {
 	/**
 	 * W​e​l​c​o​m​e
 	 */
-	welcome: string
+	blue: string
 	/**
 	 * N​a​v​i​g​a​t​i​o​n
 	 */
-	navigation: string
+	orange: string
 	/**
 	 * A​b​o​u​t​ ​M​e
 	 */
-	aboutMe: string
+	yellow: string
 	/**
 	 * A​b​o​u​t​ ​T​h​i​s​ ​P​a​g​e
 	 */
-	aboutThisPage: string
+	green: string
 	/**
 	 * P​r​o​j​e​c​t​s
 	 */
-	projects: string
+	white: string
 	/**
 	 * I​m​p​r​i​n​t
 	 */
-	imprint: string
+	red: string
 	/**
 	 * M​i​n​i​m​a​p
 	 */
@@ -68,27 +68,27 @@ export type TranslationFunctions = {
 	/**
 	 * Welcome
 	 */
-	welcome: () => LocalizedString
+	blue: () => LocalizedString
 	/**
 	 * Navigation
 	 */
-	navigation: () => LocalizedString
+	orange: () => LocalizedString
 	/**
 	 * About Me
 	 */
-	aboutMe: () => LocalizedString
+	yellow: () => LocalizedString
 	/**
 	 * About This Page
 	 */
-	aboutThisPage: () => LocalizedString
+	green: () => LocalizedString
 	/**
 	 * Projects
 	 */
-	projects: () => LocalizedString
+	white: () => LocalizedString
 	/**
 	 * Imprint
 	 */
-	imprint: () => LocalizedString
+	red: () => LocalizedString
 	/**
 	 * Minimap
 	 */

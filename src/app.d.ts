@@ -14,3 +14,20 @@ declare namespace App {
 	// interface Error {}
 	// interface Platform {}
 }
+
+declare type Color = 'red' | 'blue' | 'white' | 'green' | 'orange' | 'yellow'
+declare type FaceURL = '' | 'navigation' | 'about-me' | 'about-this-page' | 'projects' | 'imprint'
+declare type FaceName = URLToName<FaceURL>
+
+type URLToName<S extends String> = S extends `${infer Start extends string}-${infer Rest extends string}`
+	?	`${Start}${URLToName<Capitalize<Rest>>}`
+	: S
+
+declare interface ColorInfo {
+  bg: string,
+  txt: string,
+  btn: string
+}
+
+
+declare type Direction = 'up' | 'right' | 'down' | 'left'

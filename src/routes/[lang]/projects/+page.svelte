@@ -2,13 +2,13 @@
   import Faces from '$lib/Faces.svelte'
   import Projects from './Projects.svelte'
   import Arrow from '$lib/Arrow.svelte'
-  import {colors} from '$lib/colors'
+  import {colorInfos} from '$lib/constants'
 
-  const color = colors.projects
+  const color = colorInfos.white
 </script>
 
 <Faces classes="{color.bg} {color.txt}">
   <Projects/>
 </Faces>
-<Arrow bgColor={color.btn} side={1} text="navigation" href="/navigation"/>
-<Arrow bgColor={color.btn} side={3} text="imprint" href="/imprint"/>
+<Arrow bgColor={color.btn} side={1} href="navigation"/>
+<Arrow bgColor={color.btn} side={3} href="imprint"/>

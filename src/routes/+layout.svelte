@@ -1,46 +1,22 @@
 <script lang="ts">
   import {beforeNavigate} from '$app/navigation'
   import Transition from '$lib/Transition.svelte'
+  import {directionMap} from '$lib/constants'
   import {setLocale} from '$i18n/i18n-svelte'
   import '../app.css'
 
   import type {LayoutData} from './$types'
-  import type {Direction} from '$lib/transition' 
 
   export let data: LayoutData
 
   setLocale(data.locale)
 
-  const directionMap: Record<string, Record<string, Direction>> = {
-    '': {
-      'navigation': 'down'
-    },
-    'navigation': {
-      '': 'up',
-      'projects': 'right',
-      'about-this-page': 'down',
-      'about-me': 'left'
-    },
-    'about-me': {
-      'navigation': 'right'
-    },
-    'about-this-page': {
-      'navigation': 'up'
-    },
-    'projects': {
-      'navigation': 'left',
-      'imprint': 'right'
-    },
-    'imprint': {
-      'projects': 'left'
-    }
-  }
-
   let direction: Direction = 'down'
 
   beforeNavigate(({from, to}) => {
-    const fromStr = from?.url?.pathname?.split('/')?.[2] ?? ''
-    const toStr = to?.url?.pathname?.split('/')?.[2] ?? ''
+    // TODO: proper typesafty
+    const fromStr = (from?.url?.pathname?.split('/')?.[2] ?? '') as FaceURL
+    const toStr = (to?.url?.pathname?.split('/')?.[2] ?? '') as FaceURL
 
     direction = directionMap[fromStr]?.[toStr] ?? 'down'
   })

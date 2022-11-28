@@ -2,8 +2,6 @@ import {quadInOut} from 'svelte/easing'
 
 import type {TransitionConfig} from 'svelte/transition'
 
-export type Direction = 'up' | 'right' | 'down' | 'left'
-
 interface Params {
   direction: Direction
 }
