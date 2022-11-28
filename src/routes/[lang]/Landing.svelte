@@ -1,14 +1,12 @@
 <script lang="ts">
   import LL from '$i18n/i18n-svelte'
-
-  $: console.log($LL.HI({name: 'Elias'}))
 </script>
 
 <div class="flex flex-col w-full h-full items-center">
   <div class="p-[2vw]"/>
   <h1 class="font-bold grid place-items-center">
     <span class="text-[5vw] opacity-60 tracking-widest">
-      Portfolio of
+      {$LL.landingGreeting()}
     </span>
     <span class="fancy bg-pan-gradient">Elias Gerster</span>
   </h1>
@@ -22,8 +20,7 @@
     />
   </svg>
   <p class="max-w-2xl mx-4 text-center text-[max(1rem,2vw)]">
-    To navigate this website you can use those arrows below.
-    You can also at any time press the button in the bottom right corner and see what happens.
+    {$LL.landingInstruction()}
   </p>
   <div class="p-[6vw]"/>
 </div>
