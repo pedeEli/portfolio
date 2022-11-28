@@ -15,6 +15,9 @@ const config = {
 		}),
 		files: {
 			lib: 'src/lib'
+		},
+		alias: {
+			'$i18n/*': 'src/i18n/*'
 		}
 	}
 };

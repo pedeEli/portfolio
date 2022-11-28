@@ -1,10 +1,13 @@
 <script lang="ts">
   import Transition from '$lib/Transition.svelte'
+  import {setLocale} from '$i18n/i18n-svelte'
   import '../app.css'
 
   import type {LayoutData} from './$types'
 
   export let data: LayoutData
+
+  setLocale(data.locale)
 </script>
 
 <main class="h-screen grid place-items-center">

@@ -11,13 +11,14 @@ specifiers:
   svelte-preprocess: ^4.10.6
   tailwindcss: ^3.2.4
   tslib: ^2.3.1
-  typescript: ^4.7.4
+  typesafe-i18n: ^5.17.0
+  typescript: ^4.9.3
   vite: ^3.1.0
 
 devDependencies:
   '@sveltejs/adapter-auto': 1.0.0-next.89
   '@sveltejs/adapter-vercel': 1.0.0-next.84
-  '@sveltejs/kit': 1.0.0-next.561_svelte@3.53.1+vite@3.2.4
+  '@sveltejs/kit': 1.0.0-next.563_svelte@3.53.1+vite@3.2.4
   autoprefixer: 10.4.13_postcss@8.4.19
   postcss: 8.4.19
   svelte: 3.53.1
@@ -25,6 +26,7 @@ devDependencies:
   svelte-preprocess: 4.10.7_mvbmsfnr3ibpjsbee6imjcb33m
   tailwindcss: 3.2.4
   tslib: 2.4.1
+  typesafe-i18n: 5.17.0_typescript@4.9.3
   typescript: 4.9.3
   vite: 3.2.4
 
@@ -123,8 +125,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.561_svelte@3.53.1+vite@3.2.4:
-    resolution: {integrity: sha512-N8HQvS6gcm7R78ADfM4xjhuFS3Ir+Ezce3De8WOnISXQ1tS2npc5LMH9LRHHi14nfosAfJ7vUlcLwLE6N/I7+Q==}
+  /@sveltejs/kit/1.0.0-next.563_svelte@3.53.1+vite@3.2.4:
+    resolution: {integrity: sha512-RvQSE6dOuH4vE2hM5K/DezJlm9RjC5EMQK8X46mBXIggp8unaDH+YJyF+KRvAZE5sV93Hk5xaq0WZa8jtU42Jw==}
     engines: {node: '>=16.14'}
     hasBin: true
     requiresBuild: true
@@ -1537,6 +1539,15 @@ packages:
 
   /tslib/2.4.1:
     resolution: {integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==}
+    dev: true
+
+  /typesafe-i18n/5.17.0_typescript@4.9.3:
+    resolution: {integrity: sha512-YRy/WdQizZfrW21v5dzsOOTuEmkaMx4Z2G0QjgxWBgS0TNf10Sk/rPwqtcnR9VOAyRCJt/GtZqgDzFRvdsB3zA==}
+    hasBin: true
+    peerDependencies:
+      typescript: '>=3.5.1'
+    dependencies:
+      typescript: 4.9.3
     dev: true
 
   /typescript/4.9.3:

@@ -1,3 +1,9 @@
+<script lang="ts">
+  import LL from '$i18n/i18n-svelte'
+
+  $: console.log($LL.HI({name: 'Elias'}))
+</script>
+
 <div class="flex flex-col w-full h-full items-center">
   <div class="p-[2vw]"/>
   <h1 class="font-bold grid place-items-center">
