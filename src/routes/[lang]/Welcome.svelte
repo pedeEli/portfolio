@@ -6,7 +6,7 @@
   <div class="p-[2vw]"/>
   <h1 class="font-bold grid place-items-center">
     <span class="text-[5vw] opacity-60 tracking-widest">
-      {$LL.landingGreeting()}
+      {$LL.welcomeGreeting()}
     </span>
     <span class="fancy bg-pan-gradient">Elias Gerster</span>
   </h1>
@@ -20,7 +20,7 @@
     />
   </svg>
   <p class="max-w-2xl mx-4 text-center text-[max(1rem,2vw)]">
-    {$LL.landingInstruction()}
+    {$LL.welcomeInstruction()}
   </p>
   <div class="p-[6vw]"/>
 </div>

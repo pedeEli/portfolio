@@ -17,38 +17,86 @@ type RootTranslation = {
 	/**
 	 * P​o​r​t​f​o​l​i​o​ ​o​f
 	 */
-	landingGreeting: string
+	welcomeGreeting: string
 	/**
 	 * T​o​ ​n​a​v​i​g​a​t​e​ ​t​h​i​s​ ​w​e​b​s​i​t​e​ ​y​o​u​ ​c​a​n​ ​u​s​e​ ​t​h​o​s​e​ ​a​r​r​o​w​s​ ​b​e​l​o​w​.​ ​Y​o​u​ ​c​a​n​ ​a​l​s​o​ ​a​t​ ​a​n​y​ ​t​i​m​e​ ​p​r​e​s​s​ ​t​h​e​ ​b​u​t​t​o​n​ ​i​n​ ​t​h​e​ ​b​o​t​t​o​m​ ​r​i​g​h​t​ ​c​o​r​n​e​r​ ​a​n​d​ ​s​e​e​ ​w​h​a​t​ ​h​a​p​p​e​n​s​.
 	 */
-	landingInstruction: string
+	welcomeInstruction: string
 	/**
-	 * L​a​n​d​i​n​g
+	 * W​e​l​c​o​m​e
 	 */
-	landing: string
+	welcome: string
 	/**
 	 * N​a​v​i​g​a​t​i​o​n
 	 */
 	navigation: string
+	/**
+	 * A​b​o​u​t​ ​M​e
+	 */
+	aboutMe: string
+	/**
+	 * A​b​o​u​t​ ​T​h​i​s​ ​P​a​g​e
+	 */
+	aboutThisPage: string
+	/**
+	 * P​r​o​j​e​c​t​s
+	 */
+	projects: string
+	/**
+	 * I​m​p​r​i​n​t
+	 */
+	imprint: string
+	/**
+	 * M​i​n​i​m​a​p
+	 */
+	minimap: string
+	/**
+	 * 2​.​7​5​v​w
+	 */
+	minimapFontSize: string
 }
 
 export type TranslationFunctions = {
 	/**
 	 * Portfolio of
 	 */
-	landingGreeting: () => LocalizedString
+	welcomeGreeting: () => LocalizedString
 	/**
 	 * To navigate this website you can use those arrows below. You can also at any time press the button in the bottom right corner and see what happens.
 	 */
-	landingInstruction: () => LocalizedString
+	welcomeInstruction: () => LocalizedString
 	/**
-	 * Landing
+	 * Welcome
 	 */
-	landing: () => LocalizedString
+	welcome: () => LocalizedString
 	/**
 	 * Navigation
 	 */
 	navigation: () => LocalizedString
+	/**
+	 * About Me
+	 */
+	aboutMe: () => LocalizedString
+	/**
+	 * About This Page
+	 */
+	aboutThisPage: () => LocalizedString
+	/**
+	 * Projects
+	 */
+	projects: () => LocalizedString
+	/**
+	 * Imprint
+	 */
+	imprint: () => LocalizedString
+	/**
+	 * Minimap
+	 */
+	minimap: () => LocalizedString
+	/**
+	 * 2.75vw
+	 */
+	minimapFontSize: () => LocalizedString
 }
 
 export type Formatters = {}

@@ -4,10 +4,10 @@
   import Arrow from '$lib/Arrow.svelte'
   import {colors} from '$lib/colors'
 
-  const color = colors['about-this-page']
+  const color = colors.aboutThisPage
 </script>
 
 <Faces classes="{color.bg} {color.txt}">
   <About/>
 </Faces>
-<Arrow bgColor={color.btn} side={2} text="Navigation" href="/navigation"/>
+<Arrow bgColor={color.btn} side={2} text="navigation" href="/navigation"/>

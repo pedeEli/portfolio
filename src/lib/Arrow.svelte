@@ -4,9 +4,11 @@
   import {direction} from '$lib/Transition.svelte'
   import type {Direction} from '$lib/transition'
 
-  import {locale} from '$i18n/i18n-svelte'
+  import LL, {locale} from '$i18n/i18n-svelte'
+
+  import type {Faces} from '$lib/colors'
   
-  export let text: string
+  export let text: Faces
   export let side: 0 | 1 | 2 | 3
   export let bgColor: string
   export let href: string
@@ -60,7 +62,7 @@
       style:rotate="z {(side % 2) * 180}deg"
       style:translate="{(side % 2) * -0.28}vw 0"
       style:writing-mode={side % 2 === 0 ? 'horizontal-tb' : 'vertical-rl'}
-    >{text}</div>
+    >{$LL[text]()}</div>
   </button>
 </div>
 
