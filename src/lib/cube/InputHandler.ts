@@ -29,15 +29,10 @@ export class InputHandler {
     }
 
     public addHandlers() {
-        this._canvas.addEventListener('mousemove', this._mousemove.bind(this))
-        this._canvas.addEventListener('mousedown', this._click.bind(this))
-        this._canvas.addEventListener('mouseup', this._mouseup.bind(this))
-    }
-
-    public removeHandlers() {
-        this._canvas.removeEventListener('mousemove', this._mousemove.bind(this))
-        this._canvas.removeEventListener('mousedown', this._click.bind(this))
-        this._canvas.removeEventListener('mouseup', this._mouseup.bind(this))
+        this._canvas.onmousemove = this._mousemove.bind(this)
+        this._canvas.onmousedown = this._click.bind(this)
+        this._canvas.onmouseup = this._mouseup.bind(this)
+        this._canvas.onmouseleave = this._mouseleave.bind(this)
     }
 
     
@@ -52,6 +47,7 @@ export class InputHandler {
     private _click({button, offsetX, offsetY}: MouseEvent) {
         if (button !== 0) return
         if (!this._hovering) return
+        if (this._rubics.isTurning) return
         this._setSideInfo(offsetX, offsetY)
     }
     private _mousemove({offsetX, offsetY, movementX, movementY, buttons}: MouseEvent) {
@@ -64,6 +60,10 @@ export class InputHandler {
         this._castRay(offsetX, offsetY)
     }
     private _mouseup(event: MouseEvent) {
+        if (this._turning)
+            return this._finishTurn()
+    }
+    private _mouseleave(event: MouseEvent) {
         if (this._turning)
             return this._finishTurn()
     }

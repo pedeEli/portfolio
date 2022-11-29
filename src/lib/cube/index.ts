@@ -28,9 +28,9 @@ export const init = (wrapper: HTMLElement) => {
     camera = new Camera(new V3(0, 0, -10), V3.zero, V3.up, 45, window.innerWidth, window.innerHeight, .1, 100)
     rubics = new Rubics(Quaternion.identity, gl)
     inputHandler = new InputHandler(canvas, rubics, camera)
+    inputHandler.addHandlers()
   }
   
-  inputHandler.addHandlers()
 
   const unsubLocale = locale.subscribe($locale => {
     const texture = loadTexture(gl, `/${$locale}.png`)
@@ -78,7 +78,6 @@ export const init = (wrapper: HTMLElement) => {
   return () => {
     window.removeEventListener('resize', resizeHandler)
     cancelAnimationFrame(frame)
-    inputHandler.removeHandlers()
     unsubLocale()
     canvas?.remove()
   }

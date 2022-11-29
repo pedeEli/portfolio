@@ -204,6 +204,10 @@ export class Cube implements GameObject {
     private _initialRotation!: Quaternion
     private _targetRotation!: Quaternion
 
+    public get isTurning() {
+        return this._turning
+    }
+
     public transformSides(axis: Cube.Axis, angle: number) {
         this._outsides.forEach(plane => {
             const currentSide = plane.side!

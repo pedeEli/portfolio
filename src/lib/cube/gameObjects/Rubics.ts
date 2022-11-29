@@ -18,7 +18,7 @@ export class Rubics implements GameObject {
                 const row: Cube[] = []
                 for (let z = 0; z < 3; z++) {
                     const position = new V3(x, y, z).sub(V3.one)
-                    const cube = new Cube(position, Quaternion.identity, x, y, z, this,gl)
+                    const cube = new Cube(position, Quaternion.identity, x, y, z, this, gl)
                     this.transform.addChild(cube)
                     row.push(cube)
                 }
@@ -37,6 +37,21 @@ export class Rubics implements GameObject {
 
     public get cubes() {
         return this._cubes.flat(2)
+    }
+
+    public get isTurning() {
+        for (let x = 0; x < 3; x++) {
+            const plane = this._cubes[x]
+            for (let y = 0; y < 3; y++) {
+                const row = plane[y]
+                for (let z = 0; z < 3; z++) {
+                    const cube = row[z]
+                    if (cube.isTurning)
+                        return true
+                }
+            }
+        }
+        return false
     }
 
 
@@ -80,7 +95,14 @@ export class Rubics implements GameObject {
         })
     }
 
-    private _turnPlane(plane: Cube[][], axisName: Cube.Axis, axis: V3, angle: number, offset: number, setter: (x1: number, x2: number, cube: Cube) => void) {
+    private _turnPlane(
+        plane: Cube[][],
+        axisName: Cube.Axis,
+        axis: V3,
+        angle: number,
+        offset: number,
+        setter: (x1: number, x2: number, cube: Cube) => void
+    ) {
         const cubes = [
             plane[0][0],
             plane[0][1],
