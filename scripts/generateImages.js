@@ -31,7 +31,7 @@ const locales = [
 	'de',
 	'en'
 ]
-/** @type {import('../src/app').FaceURL[]} */
+/** @type {string[]} */
 const routes = [
 	'',
 	'navigation',
