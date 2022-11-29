@@ -1,10 +1,14 @@
 <script lang="ts">
   import {onMount} from 'svelte'
+  import {get} from 'svelte/store'
+
   import {Program} from '$lib/3D/Program'
   import {InputHandler} from '$lib/3D/InputHandler'
   import {fragment, vertex} from '$lib/3D/shader/cube.glsl'
   import {Camera, Rubics} from '$lib/3D/gameObjects'
   import {V3, Quaternion} from '$lib/3D/math'
+
+  import {locale} from '$i18n/i18n-svelte'
   
   let canvas: HTMLCanvasElement
 
@@ -40,7 +44,7 @@
     const program = new Program('cube.glsl', vertex, fragment, gl)
     program.use()
 
-    const texture = loadTexture(gl, '/en.png')
+    const texture = loadTexture(gl, `/${get(locale)}.png`)
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
     gl.activeTexture(gl.TEXTURE0)
     gl.bindTexture(gl.TEXTURE_2D, texture)
