@@ -1,7 +1,6 @@
 import puppeteer from 'puppeteer'
 import {exec} from 'child_process'
 import sharp from 'sharp'
-import fs from 'fs/promises'
 
 const FILE_SIZE = 512
 
@@ -12,6 +11,7 @@ const browser = await puppeteer.launch()
 
 /**
  * @param {string} pathname
+ * @return {Buffer}
  */
 const createImage = async pathname => {
   const page = await browser.newPage()
@@ -21,17 +21,17 @@ const createImage = async pathname => {
     deviceScaleFactor: 1
   })
   await page.goto(`http://localhost:5173/${pathname}`)
-  const fileName = `${pathname.replace('/', '_')}.png`
-  await page.screenshot({path: fileName})
+  const buffer = await page.screenshot({type: 'png'})
   await page.close()
-  return fileName
+  return buffer
 }
 
-/** @type {typeof import('../src/i18n/i18n-util').locales} */
+/** @type {import('../src/i18n/i18n-types').Locales[]} */
 const locales = [
 	'de',
 	'en'
 ]
+/** @type {import('../src/app').FaceURL[]} */
 const routes = [
 	'',
 	'navigation',
@@ -58,9 +58,10 @@ const createAllImages = async lang => {
     routes.map(async route => {
       return {
         route,
-        fileName: await createImage(`${lang}/${route}`)
+        buffer: await createImage(`${lang}/${route}`)
       }
-    }))
+    })
+  )
 
   await sharp({create: {
     width: FILE_SIZE * 3,
@@ -69,49 +70,24 @@ const createAllImages = async lang => {
     background: '#000000'
   }})
     .composite(
-      images.map(({route, fileName}) => {
+      images.map(({route, buffer}) => {
         const {top, left} = positions[route]
         return {
           top,
           left,
-          input: fileName
+          input: buffer
         }
       })
     )
-    .toFile(`${lang}_output.png`)
-
-  await Promise.all(
-    images.map(({fileName}) => fs.unlink(fileName))
-  )
+    .toFile(`static/${lang}.png`)
 }
 
-await createAllImages('en')
+await Promise.all(
+  locales.map(createAllImages)
+)
 
 await browser.close()
 childProcess.kill()
-
-
-sharp({
-  create: {
-    width: 1024,
-    height: 512,
-    channels: 3,
-    background: '#000000'
-  }
-})
-  .composite([
-    {
-      left: 0,
-      top: 0,
-      input: './de_navigation.png'
-    },
-    {
-      left: 512,
-      top: 0,
-      input: './de.png'
-    }
-  ])
-  .toFile('output.png')
 
 
 process.exit(0)

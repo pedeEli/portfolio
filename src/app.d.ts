@@ -16,7 +16,7 @@ declare namespace App {
 }
 
 declare type Color = 'red' | 'blue' | 'white' | 'green' | 'orange' | 'yellow'
-declare type FaceURL = '' | 'navigation' | 'about-me' | 'about-this-page' | 'projects' | 'imprint'
+export declare type FaceURL = '' | 'navigation' | 'about-me' | 'about-this-page' | 'projects' | 'imprint'
 declare type FaceName = URLToName<FaceURL>
 
 type URLToName<S extends String> = S extends `${infer Start extends string}-${infer Rest extends string}`
