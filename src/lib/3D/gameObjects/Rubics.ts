@@ -10,7 +10,7 @@ export class Rubics implements GameObject {
     
     public transform: Transform
 
-    public constructor(rotation: Quaternion) {
+    public constructor(rotation: Quaternion, gl: WebGL2RenderingContext) {
         this.transform = new Transform(V3.zero, rotation, rotationFirst)
         for (let x = 0; x < 3; x++) {
             const plane: Cube[][] = []
@@ -18,7 +18,7 @@ export class Rubics implements GameObject {
                 const row: Cube[] = []
                 for (let z = 0; z < 3; z++) {
                     const position = new V3(x, y, z).sub(V3.one)
-                    const cube = new Cube(position, Quaternion.identity, x, y, z, this)
+                    const cube = new Cube(position, Quaternion.identity, x, y, z, this,gl)
                     this.transform.addChild(cube)
                     row.push(cube)
                 }

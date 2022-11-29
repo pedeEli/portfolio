@@ -36,4 +36,10 @@ declare namespace Cube {
 	declare type Axis = 'x' | 'y' | 'z'
 	declare type TurnDirections = {right: [Axis, number], down: [Axis, number]}
 	declare type Side = 'up' | 'down' | 'left' | 'right' | 'forward' | 'back'
+	declare interface UVs {
+		u1: number,
+		v1: number,
+		u2: number,
+		v2: number
+	}
 }

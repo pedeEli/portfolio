@@ -8,6 +8,26 @@
   
   let canvas: HTMLCanvasElement
 
+  const loadTexture = (gl: WebGL2RenderingContext, url: string) => {
+    const texture = gl.createTexture()!
+    gl.bindTexture(gl.TEXTURE_2D, texture)
+
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 255, 255, 255]))
+
+    const image = new Image()
+    image.addEventListener('load', () => {
+      gl.bindTexture(gl.TEXTURE_2D, texture)
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+    })
+    image.src = url
+
+    return texture
+  }
+
   onMount(() => {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
@@ -20,36 +40,16 @@
     const program = new Program('cube.glsl', vertex, fragment, gl)
     program.use()
 
-    const vertices = [
-       .5,  .5,  0,
-       .5, -.5,  0,
-      -.5,  .5,  0,
-      -.5, -.5,  0
-    ]
-    const verticesBuffer = new Float32Array(vertices)
-    const vbo = gl.createBuffer()!
-
-    const indices = [
-      0, 1, 2,
-      1, 2, 3
-    ]
-    const indicesBuffer = new Int8Array(indices)
-    const ebo = gl.createBuffer()!
-
-    const vao = gl.createVertexArray()!
-    gl.bindVertexArray(vao)
-
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ebo)
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indicesBuffer, gl.STATIC_DRAW)
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, vbo)
-    gl.bufferData(gl.ARRAY_BUFFER, verticesBuffer, gl.STATIC_DRAW)
-
-    gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 12, 0)
-    gl.enableVertexAttribArray(0)
+    const texture = loadTexture(gl, '/en.png')
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
+    gl.activeTexture(gl.TEXTURE0)
+    gl.bindTexture(gl.TEXTURE_2D, texture)
+    program.uniform('tex', {
+      setUniform: (gl, location) => gl.uniform1i(location, 0)
+    })
 
     const camera = new Camera(new V3(0, 0, -10), V3.zero, V3.up, 45, window.innerWidth, window.innerHeight, .1, 100)
-    const rubics = new Rubics(Quaternion.identity)
+    const rubics = new Rubics(Quaternion.identity, gl)
     const inputHandler = new InputHandler(canvas, rubics, camera)
     inputHandler.setupHandlers()
 

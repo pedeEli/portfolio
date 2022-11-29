@@ -7,17 +7,51 @@ import type {GameObject} from '.'
 export class Plane implements GameObject {
     private _color: V3
     private _hoveringColor: V3
+    private _vao: WebGLVertexArrayObject
 
     public hovering = false
 
-    public constructor(color: V3, hoveringColor: V3, public transform: Transform, public turnDirections?: Cube.TurnDirections, public side?: Cube.Side) {
+    public constructor(color: V3, hoveringColor: V3, gl: WebGL2RenderingContext, public transform: Transform, uvs: Cube.UVs = {u1: 0, v1: 0, u2: 0, v2: 0}, public turnDirections?: Cube.TurnDirections, public side?: Cube.Side) {
         this._color = color
         this._hoveringColor = hoveringColor
+        this._vao = gl.createVertexArray()!
+        gl.bindVertexArray(this._vao)
+
+        const vertices = [
+             .5,  .5,  0,   uvs.u1,  uvs.v1,
+             .5, -.5,  0,   uvs.u1,  uvs.v2,
+            -.5,  .5,  0,   uvs.u2,  uvs.v1,
+            -.5, -.5,  0,   uvs.u2,  uvs.v2
+        ]
+        const verticesBuffer = new Float32Array(vertices)
+        const vbo = gl.createBuffer()!
+    
+        const indices = [
+            0, 1, 2,
+            1, 2, 3
+        ]
+        const indicesBuffer = new Int8Array(indices)
+        const ebo = gl.createBuffer()!
+
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ebo)
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indicesBuffer, gl.STATIC_DRAW)
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, vbo)
+        gl.bufferData(gl.ARRAY_BUFFER, verticesBuffer, gl.STATIC_DRAW)
+
+        gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 20, 0)
+        gl.enableVertexAttribArray(0)
+        gl.vertexAttribPointer(1, 2, gl.FLOAT, false, 20, 12)
+        gl.enableVertexAttribArray(1)
     }
 
     public render(program: Program, gl: WebGL2RenderingContext) {
         program.uniform('model', this.transform.globalTransform)
-        program.uniform('color', this.hovering ? this._hoveringColor : this._color)
+        program.uniform('inside', {
+            setUniform: (gl, location) => gl.uniform1i(location, this.turnDirections ? 0 : 1)
+        })
+        // program.uniform('color', this.hovering ? this._hoveringColor : this._color)
+        gl.bindVertexArray(this._vao)
         gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_BYTE, 0)
     }
 }

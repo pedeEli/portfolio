@@ -1,4 +1,4 @@
-import {V3, Quaternion, mod} from '../math'
+import {V3, Quaternion, mod, V2} from '../math'
 import {Transform, positionFirst, Plane, createTransform} from '.'
 
 import type {Program} from '../Program'
@@ -9,37 +9,43 @@ export const planeInfo = {
         color: new V3(1, 1, 1),
         hovering: new V3(.7, .7, .7),
         pos: V3.up,
-        rotation: Quaternion.fromAngle(V3.up, 180).mult(Quaternion.fromAngle(V3.left, 90))
+        rotation: Quaternion.fromAngle(V3.up, 180).mult(Quaternion.fromAngle(V3.left, 90)),
+        uv: [0, .5]
     } as const,
     down: {
         color: new V3(1, 1, 0),
         hovering: new V3(.7, .7, 0),
         pos: V3.down,
-        rotation: Quaternion.fromAngle(V3.left, 90)
+        rotation: Quaternion.fromAngle(V3.left, 90),
+        uv: [0, 0]
     } as const,
     back: {
         color: new V3(1, 0, 0),
         hovering: new V3(.7, 0, 0),
         pos: V3.back,
-        rotation: Quaternion.fromAngle(V3.forward, 180)
+        rotation: Quaternion.fromAngle(V3.forward, 180),
+        uv: [-.333, .5]
     } as const,
     forward: {
         color: new V3(1, .5, 0),
         hovering: new V3(.7, .3, 0),
         pos: V3.forward,
-        rotation: Quaternion.fromAngle(V3.down, 0)
+        rotation: Quaternion.fromAngle(V3.down, 0),
+        uv: [.666, 0]
     } as const,
     left: {
         color: new V3(0, 1, 0),
         hovering: new V3(0, .7, 0),
         pos: V3.left,
-        rotation: Quaternion.fromAngle(V3.up, 90)
+        rotation: Quaternion.fromAngle(V3.up, 90),
+        uv: [-.666, .5]
     } as const,
     right: {
         color: new V3(0, 0, 1),
         hovering: new V3(0, 0, .7),
         pos: V3.right,
-        rotation: Quaternion.fromAngle(V3.right, 180).mult(Quaternion.fromAngle(V3.up, 90))
+        rotation: Quaternion.fromAngle(V3.right, 180).mult(Quaternion.fromAngle(V3.up, 90)),
+        uv: [.333, 0]
     } as const,
 } as const
 
@@ -151,16 +157,18 @@ export class Cube implements GameObject {
     public transform: Transform
     public index: V3
 
-    public constructor(position: V3, rotation: Quaternion, x: number, y: number, z: number, parent: GameObject) {
+    public constructor(position: V3, rotation: Quaternion, x: number, y: number, z: number, parent: GameObject, gl: WebGL2RenderingContext) {
         this.transform = new Transform(position, rotation, positionFirst, parent)
         this.index = new V3(x, y, z)
-        Object.entries(planeInfo).forEach(([side, {color, hovering, pos, rotation}]) => {
+        Object.entries(planeInfo).forEach(([side, {color, hovering, pos, rotation, uv}]) => {
             const inside = isInside(side as Cube.Side, x, y, z)
             if (inside)
                 color = V3.zero
 
             const transform = createTransform(pos.scale(.5), rotation, this, inside)
-            const plane = new Plane(color, hovering, transform, turnDirections[x][y][z][side as Cube.Side], side as Cube.Side)
+            const turnDirection = turnDirections[x][y][z][side as Cube.Side]
+            const uvs = getUVs(uv, this.index, turnDirection)
+            const plane = new Plane(color, hovering, gl, transform, uvs, turnDirection, side as Cube.Side)
             this.transform.addChild(plane)
             if (inside) return 
             this._outsides.push(plane)
@@ -236,4 +244,76 @@ const isInside = (side: Cube.Side, x: number, y: number, z: number) => {
         || side === 'back'    && z !== 0
         || side === 'left'    && x !== 2
         || side === 'right'   && x !== 0
+}
+
+const getUVs = (uv: readonly [number, number], pos: V3, turnDirection?: Cube.TurnDirections): Cube.UVs | undefined => {
+    if (!turnDirection)
+        return
+    
+    const [downAxis, downIndex] = turnDirection.down
+    const [rightAxis, rightIndex] = turnDirection.right
+
+    if (
+        downAxis === 'x' && rightAxis === 'z' && pos.y === 2 ||
+        downAxis === 'x' && rightAxis === 'y' && pos.z === 0
+    ){
+        const u = uv[0] + downIndex * .111
+        const v = uv[1] + rightIndex * .166
+
+        return {
+            u1: .333 - u,
+            v1: v,
+            u2: .222 - u,
+            v2: v + .166
+        }
+    }
+
+    if (downAxis === 'z' && rightAxis === 'y' && pos.x === 2) {
+        const u = uv[0] + downIndex * .111
+        const v = uv[1] + rightIndex * .166 + .166
+    
+        return {
+            u1: .333 - u,
+            v1: v,
+            u2: .222 - u,
+            v2: v - .166
+        }
+    }
+
+    
+    if (downAxis === 'z' && rightAxis === 'y' && pos.x === 0) {
+        const u = uv[0] + downIndex * .111
+        const v = uv[1] + rightIndex * .166
+
+        return {
+            u1: .111 + u,
+            v1: v,
+            u2: u,
+            v2: v + .166
+        }
+    }
+
+    if (downAxis === 'x' && rightAxis === 'y' && pos.z === 2) {
+        const u = uv[0] + downIndex * .111
+        const v = uv[1] + rightIndex * .166 + .166
+
+        return {
+            u1: .111 + u,
+            v1: v,
+            u2: u,
+            v2: v - .166
+        }
+    }
+
+    if (downAxis === 'x' && rightAxis === 'z' && pos.y === 0) {
+        const u = uv[0] + downIndex * .111
+        const v = uv[1] + rightIndex * .166
+
+        return {
+            u1: .222 - u,
+            v1: .334 - v,
+            u2: .333 - u,
+            v2: .5 - v
+        }
+    }
 }
