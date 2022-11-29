@@ -28,10 +28,16 @@ export class InputHandler {
         this._camera = camera
     }
 
-    public setupHandlers() {
-        this._canvas.addEventListener('mousemove', e => this._mousemove(e))
-        this._canvas.addEventListener('mousedown', e => this._click(e))
-        this._canvas.addEventListener('mouseup', e => this._mouseup(e))
+    public addHandlers() {
+        this._canvas.addEventListener('mousemove', this._mousemove.bind(this))
+        this._canvas.addEventListener('mousedown', this._click.bind(this))
+        this._canvas.addEventListener('mouseup', this._mouseup.bind(this))
+    }
+
+    public removeHandlers() {
+        this._canvas.removeEventListener('mousemove', this._mousemove.bind(this))
+        this._canvas.removeEventListener('mousedown', this._click.bind(this))
+        this._canvas.removeEventListener('mouseup', this._mouseup.bind(this))
     }
 
     
