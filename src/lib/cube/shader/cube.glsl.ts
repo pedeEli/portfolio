@@ -31,6 +31,7 @@ float outer = 0.50;
 float inner = 0.48;
 
 uniform bool inside;
+uniform bool hovering;
 uniform sampler2D tex;
 
 float map(float value, float min1, float max1, float min2, float max2)
@@ -45,17 +46,20 @@ void main()
         return;
     }
 
+    vec4 color = texture(tex, uv);
     float x = abs(pos.x);
     float y = abs(pos.y);
     if (x > outer || y > outer) {
-        FragColor = rime;
-        return;
-    }
-    if (x > inner || y > inner) {
+        color = rime;
+    } else if (x > inner || y > inner) {
         float t = smoothstep(0.0, 1.0, map(max(x, y), outer, inner, 0.0, 1.0));
-        vec4 color = texture(tex, uv);
-        FragColor = color * t + rime * (1.0 - t);
-        return;
+        vec4 texColor = texture(tex, uv);
+        color = texColor * t + rime * (1.0 - t);
     }
-    FragColor = texture(tex, uv);
+
+    if (hovering) {
+        FragColor = vec4(color.rgb - vec3(0.08), 1.0);
+    } else {
+        FragColor = color;
+    }
 }`

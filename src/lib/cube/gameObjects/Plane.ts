@@ -5,15 +5,11 @@ import type {V3, Quaternion} from '../math'
 import type {GameObject} from '.'
 
 export class Plane implements GameObject {
-    private _color: V3
-    private _hoveringColor: V3
     private _vao: WebGLVertexArrayObject
 
     public hovering = false
 
-    public constructor(color: V3, hoveringColor: V3, gl: WebGL2RenderingContext, public transform: Transform, uvs: Cube.UVs = {u1: 0, v1: 0, u2: 0, v2: 0}, public turnDirections?: Cube.TurnDirections, public side?: Cube.Side) {
-        this._color = color
-        this._hoveringColor = hoveringColor
+    public constructor(gl: WebGL2RenderingContext, public transform: Transform, uvs: Cube.UVs = {u1: 0, v1: 0, u2: 0, v2: 0}, public turnDirections?: Cube.TurnDirections, public side?: Cube.Side) {
         this._vao = gl.createVertexArray()!
         gl.bindVertexArray(this._vao)
 
@@ -50,7 +46,9 @@ export class Plane implements GameObject {
         program.uniform('inside', {
             setUniform: (gl, location) => gl.uniform1i(location, this.turnDirections ? 0 : 1)
         })
-        // program.uniform('color', this.hovering ? this._hoveringColor : this._color)
+        program.uniform('hovering', {
+            setUniform: (gl, location) => gl.uniform1i(location, this.hovering ? 1 : 0)
+        })
         gl.bindVertexArray(this._vao)
         gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_BYTE, 0)
     }

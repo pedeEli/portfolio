@@ -6,43 +6,31 @@ import type {GameObject} from '.'
 
 export const planeInfo = {
     up: {
-        color: new V3(1, 1, 1),
-        hovering: new V3(.7, .7, .7),
         pos: V3.up,
         rotation: Quaternion.fromAngle(V3.up, 180).mult(Quaternion.fromAngle(V3.left, 90)),
         uv: [0, .5]
     } as const,
     down: {
-        color: new V3(1, 1, 0),
-        hovering: new V3(.7, .7, 0),
         pos: V3.down,
         rotation: Quaternion.fromAngle(V3.left, 90),
         uv: [0, 0]
     } as const,
     back: {
-        color: new V3(1, 0, 0),
-        hovering: new V3(.7, 0, 0),
         pos: V3.back,
         rotation: Quaternion.fromAngle(V3.forward, 180),
         uv: [-.333, .5]
     } as const,
     forward: {
-        color: new V3(1, .5, 0),
-        hovering: new V3(.7, .3, 0),
         pos: V3.forward,
         rotation: Quaternion.fromAngle(V3.down, 0),
         uv: [.666, 0]
     } as const,
     left: {
-        color: new V3(0, 1, 0),
-        hovering: new V3(0, .7, 0),
         pos: V3.left,
         rotation: Quaternion.fromAngle(V3.up, 90),
         uv: [-.666, .5]
     } as const,
     right: {
-        color: new V3(0, 0, 1),
-        hovering: new V3(0, 0, .7),
         pos: V3.right,
         rotation: Quaternion.fromAngle(V3.right, 180).mult(Quaternion.fromAngle(V3.up, 90)),
         uv: [.333, 0]
@@ -160,15 +148,12 @@ export class Cube implements GameObject {
     public constructor(position: V3, rotation: Quaternion, x: number, y: number, z: number, parent: GameObject, gl: WebGL2RenderingContext) {
         this.transform = new Transform(position, rotation, positionFirst, parent)
         this.index = new V3(x, y, z)
-        Object.entries(planeInfo).forEach(([side, {color, hovering, pos, rotation, uv}]) => {
+        Object.entries(planeInfo).forEach(([side, {pos, rotation, uv}]) => {
             const inside = isInside(side as Cube.Side, x, y, z)
-            if (inside)
-                color = V3.zero
-
             const transform = createTransform(pos.scale(.5), rotation, this, inside)
             const turnDirection = turnDirections[x][y][z][side as Cube.Side]
             const uvs = getUVs(uv, this.index, turnDirection)
-            const plane = new Plane(color, hovering, gl, transform, uvs, turnDirection, side as Cube.Side)
+            const plane = new Plane(gl, transform, uvs, turnDirection, side as Cube.Side)
             this.transform.addChild(plane)
             if (inside) return 
             this._outsides.push(plane)
