@@ -1,6 +1,8 @@
 import puppeteer from 'puppeteer'
 import {exec} from 'child_process'
 import sharp from 'sharp'
+import fs from 'fs/promises'
+import path from 'path'
 
 const FILE_SIZE = 512
 
@@ -21,6 +23,9 @@ const createImage = async pathname => {
     deviceScaleFactor: 1
   })
   await page.goto(`http://localhost:5173/${pathname}`)
+  
+  await page.addStyleTag({content: '#locales {display: none;}'})
+
   const buffer = await page.screenshot({type: 'png'})
   await page.close()
   return buffer
@@ -79,7 +84,16 @@ const createAllImages = async lang => {
         }
       })
     )
-    .toFile(`static/${lang}.png`)
+    .toFile(`static/cube/${lang}.png`)
+}
+
+const filePath = path.resolve('static/cube')
+try {
+  const stats = await fs.stat(filePath)
+  if (!stats.isDirectory())
+    throw new Error()
+} catch (e) {
+  await fs.mkdir(filePath)
 }
 
 await Promise.all(

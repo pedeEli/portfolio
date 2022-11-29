@@ -66,7 +66,7 @@
     </Transition>
   </div>
 
-  <div class="fixed top-4 left-4 flex gap-2">
+  <div class="fixed top-4 left-4 flex gap-2" id="locales">
     {#each locales as l (l)}
       <button
         class="w-14 h-14 rounded-full bg-white/20 uppercase {$locale === l && 'bg-white/40'}"

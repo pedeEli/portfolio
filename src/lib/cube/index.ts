@@ -33,7 +33,7 @@ export const init = (wrapper: HTMLElement) => {
   
 
   const unsubLocale = locale.subscribe($locale => {
-    const texture = loadTexture(gl, `/${$locale}.png`)
+    const texture = loadTexture(gl, `/cube/${$locale}.png`)
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
     gl.activeTexture(gl.TEXTURE0)
     gl.bindTexture(gl.TEXTURE_2D, texture)
