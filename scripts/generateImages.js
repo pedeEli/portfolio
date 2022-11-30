@@ -1,4 +1,3 @@
-import puppeteer from 'puppeteer'
 import chromium from 'chrome-aws-lambda'
 import {exec} from 'child_process'
 import sharp from 'sharp'
@@ -10,11 +9,7 @@ const FILE_SIZE = 512
 const childProcess = exec('pnpm run dev')
 await new Promise(resolve => setTimeout(resolve, 2000))
 
-const browser = await puppeteer.launch({
-  args: [...chromium.args, '--font-render-hinting=none'],
-  executablePath: await chromium.executablePath,
-  headless: true
-})
+const browser = await chromium.puppeteer.launch()
 
 /**
  * @param {string} pathname
