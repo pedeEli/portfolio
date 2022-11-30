@@ -4,21 +4,20 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
-		"build": "node ./scripts/generateImages.js && vite build",
+		"build": "&& vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"typesafe-i18n": "typesafe-i18n"
+		"typesafe-i18n": "typesafe-i18n",
+		"images": "node ./scripts/generateImages.js"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-vercel": "1.0.0-next.84",
 		"@sveltejs/kit": "next",
 		"autoprefixer": "^10.4.13",
-		"chrome-aws-lambda": "^10.1.0",
 		"postcss": "^8.4.19",
 		"puppeteer": "^19.3.0",
-		"puppeteer-core": "10.1.0",
 		"sharp": "^0.31.2",
 		"svelte": "^3.44.0",
 		"svelte-check": "^2.7.1",
