@@ -9,7 +9,9 @@ const FILE_SIZE = 512
 const childProcess = exec('pnpm run dev')
 await new Promise(resolve => setTimeout(resolve, 2000))
 
-const browser = await chromium.puppeteer.launch()
+const browser = await chromium.puppeteer.launch({
+  executablePath: await chromium.executablePath
+})
 
 /**
  * @param {string} pathname
