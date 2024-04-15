@@ -1,35 +1,20 @@
-import {initAcceptLanguageHeaderDetector} from 'typesafe-i18n/detectors'
-import {detectLocale, i18n, isLocale} from '$i18n/i18n-util'
-import {loadAllLocales} from '$i18n/i18n-util.sync'
+import type { Handle } from '@sveltejs/kit'
+import { redirect } from '@sveltejs/kit'
+import { getPrefferedLocale, isLocale } from '$i18n/utils'
+import { translations } from '$i18n/sync'
 
-import type {Handle, RequestEvent} from '@sveltejs/kit'
+export const handle: Handle = async ({ event, resolve }) => {
+	const lang = event.url.pathname.split('/')[1]
 
-loadAllLocales()
-const L = i18n()
+	if (lang == undefined || !isLocale(lang)) {
+		const locale = getPrefferedLocale(event.request)
+		redirect(301, `/${locale}`)
+	}
 
-export const handle: Handle = async ({event, resolve}) => {
-  const [,lang] = event.url.pathname.split('/')
+	event.locals.locale = lang
+	event.locals.LL = translations[lang]
 
-  if (!lang || !isLocale(lang)) {
-    const locale = getPreferredLocale(event)
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: `/${locale}`
-      }
-    })
-  }
-
-  const LL = L[lang]
-  event.locals.locale = lang
-  event.locals.LL = LL
-
-  return resolve(event, {
-    transformPageChunk: ({html}) => html.replace('%i18n.lang%', lang)
-  })
-}
-
-const getPreferredLocale = ({ request }: RequestEvent) => {
-	const acceptLanguageDetector = initAcceptLanguageHeaderDetector(request)
-	return detectLocale(acceptLanguageDetector)
+	return resolve(event, {
+		transformPageChunk: ({ html }) => html.replace('%i18n.lang%', lang)
+	})
 }

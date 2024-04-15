@@ -1,12 +1,10 @@
-import {loadLocaleAsync} from '$i18n/i18n-util.async'
+import type { LayoutLoad } from './$types'
+import { loadedLocales } from '$i18n/async'
+import i18n from '$i18n/utils.svelte'
 
-import type {LayoutLoad} from './$types'
-
-export const load: LayoutLoad = async ({url, data}) => {
-  await loadLocaleAsync(data.locale)
-
-  return {
-    pathname: url.pathname,
-    locale: data.locale
-  }
+export const load: LayoutLoad = ({ data }) => {
+	loadedLocales[data.locale] = data.LL
+	i18n.locale = data.locale
+	i18n.LL = data.LL
+	return data
 }

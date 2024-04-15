@@ -1,32 +1,38 @@
 <script lang="ts">
-  import {colorInfos} from '$lib/constants'
-  import LL from '$i18n/i18n-svelte'
+	import { colorInfos, colorToUrl } from '$lib/constants'
+	import i18n from '$i18n/utils.svelte'
 
-  const entries = Object.entries(colorInfos) as [Color, ColorInfo][]
+	const entries = Object.entries(colorInfos) as [Color, (typeof colorInfos)[Color]][]
 </script>
 
 <div class="w-full h-full flex flex-col items-center">
-  <div class="p-[5vw]"/>
-  <h1 class="text-[15vw]">{$LL.orange()}</h1>
-  <div class="p-[3vw]"/>
-  <div class="minimap grid w-[60vw]">
-    <div class="text-[4vw] grid items-end p-[1.2vw]" style="grid-area: title">{$LL.minimap()}</div>
-    {#each entries as [name, color] (name)}
-      <div class="face {color.bg} {color.txt}" style="grid-area: {name}; font-size: {$LL.minimapFontSize()}">{$LL[name]()}</div>
-    {/each}
-  </div>
+	<div class="p-[5vw]" />
+	<h1 class="text-[15vw]">{i18n.LL.navigation}</h1>
+	<div class="p-[3vw]" />
+	<div class="minimap grid w-[60vw]">
+		<div class="text-[4vw] grid items-end p-[1.2vw]" style="grid-area: title">
+			{i18n.LL.minimap}
+		</div>
+		{#each entries as [name, color] (name)}
+			{@const url = colorToUrl[name]}
+			<a
+				class="{color.bg} {color.txt} aspect-square grid place-items-center text-center select-none"
+				style="grid-area: {name}; font-size: {i18n.LL.minimapFontSize}"
+				href="/{i18n.locale}/{url}"
+			>
+				{i18n.LL[url]}
+			</a>
+		{/each}
+	</div>
 </div>
 
-<style>
-  .minimap {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-areas:
-      ". blue title title"
-      "yellow orange white red"
-      ". green . .";
-  }
-  .face {
-    @apply aspect-square grid place-items-center text-center;
-  }
+<style lang="postcss">
+	.minimap {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr 1fr;
+		grid-template-areas:
+			'. blue title title'
+			'yellow orange white red'
+			'. green . .';
+	}
 </style>

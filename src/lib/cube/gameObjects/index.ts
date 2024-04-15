@@ -1,7 +1,0 @@
-export * from './Camera'
-export * from './Cube'
-export * from './GameObject'
-export * from './Plane'
-export * from './PlaneTransform'
-export * from './Rubics'
-export * from './Transform'
