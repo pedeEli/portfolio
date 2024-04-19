@@ -17,7 +17,7 @@
 
 <main class="h-screen grid place-items-center">
 	<div class="relative w-screen h-[100vw] overflow-hidden">
-		<Transition pathname={data.pathname}>
+		<Transition>
 			<div class="w-full h-full">
 				{@render children()}
 			</div>

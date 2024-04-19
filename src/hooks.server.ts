@@ -4,11 +4,12 @@ import { getPrefferedLocale, isLocale } from '$i18n/utils'
 import { translations } from '$i18n/sync'
 
 export const handle: Handle = async ({ event, resolve }) => {
-	const lang = event.url.pathname.split('/')[1]
+	const [, ...parts] = event.url.pathname.split('/')
+	const lang = parts[0]
 
 	if (lang == undefined || !isLocale(lang)) {
 		const locale = getPrefferedLocale(event.request)
-		redirect(301, `/${locale}`)
+		redirect(301, `/${locale}/${parts.join('/')}`)
 	}
 
 	event.locals.locale = lang

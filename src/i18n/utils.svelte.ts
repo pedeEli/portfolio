@@ -1,6 +1,6 @@
 import type { Locale, Translation } from './types'
 import { browser } from '$app/environment'
-import { pushState, goto } from '$app/navigation'
+import { goto } from '$app/navigation'
 import { loadLocale, loadedLocales } from './async'
 
 export const setLocale = async (locale: Locale) => {

@@ -1,9 +1,8 @@
 import type { LayoutServerLoad } from './$types'
 
-export const load: LayoutServerLoad = ({ locals, url }) => {
+export const load: LayoutServerLoad = ({ locals }) => {
 	return {
 		locale: locals.locale,
-		LL: locals.LL,
-		pathname: url.pathname
+		LL: locals.LL
 	}
 }
