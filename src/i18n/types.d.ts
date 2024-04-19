@@ -3,12 +3,12 @@ export type Locales = ['en', 'de']
 export type Translation = {
 	welcomeGreeting: string
 	welcomeInstruction: string
-	'': string
-	navigation: string
-	'about-me': string
-	'about-this-page': string
-	projects: string
-	imprint: string
+	blue: string
+	orange: string
+	yellow: string
+	green: string
+	white: string
+	red: string
 	minimap: string
 	minimapFontSize: string
 }

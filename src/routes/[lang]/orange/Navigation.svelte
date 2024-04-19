@@ -14,19 +14,19 @@
 
 <div class="w-full h-full flex flex-col items-center">
 	<div class="p-[5vw]" />
-	<h1 class="text-[15vw]">{i18n.LL.navigation}</h1>
+	<h1 class="text-[15vw]">{i18n.LL.orange}</h1>
 	<div class="p-[3vw]" />
 	<div class="minimap grid w-[60vw]">
 		<div class="text-[4vw] grid items-end p-[1.2vw]" style="grid-area: title">
 			{i18n.LL.minimap}
 		</div>
 		{#each colors as color (color)}
-			{@render tile(colorToUrl[color], colorInfos[color].bg, colorInfos[color].txt, color)}
+			{@render tile(color, colorInfos[color].bg, colorInfos[color].txt, color)}
 		{/each}
 	</div>
 </div>
 
-{#snippet tile(url: SideUrl, bg: string, color: string, name: Color)}
+{#snippet tile(url: Color, bg: string, color: string, name: Color)}
 	<a
 		class="{bg} {color} aspect-square grid place-items-center text-center select-none outline-4 -outline-offset-2 outline-zinc-900 outline"
 		style="grid-area: {name}; font-size: {i18n.LL.minimapFontSize}"

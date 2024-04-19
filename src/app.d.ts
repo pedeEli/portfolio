@@ -23,7 +23,8 @@ declare global {
 		red: 'imprint'
 	}
 
-	declare type Color = keyof Sides
+	declare type Colors = typeof import('$lib/constants').colors
+	declare type Color = Colors[number]
 	declare type SideUrl = Sides[Color]
 	declare type Direction = 'up' | 'right' | 'down' | 'left'
 }

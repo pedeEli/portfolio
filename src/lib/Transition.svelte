@@ -2,7 +2,7 @@
 	import type {Snippet} from 'svelte'
 	import { beforeNavigate, afterNavigate } from '$app/navigation'
 
-	import { directionMap, isFaceURL } from '$lib/constants'
+	import { colorPositions, isColor } from '$lib/constants'
 
 	type Props = {
 		children: Snippet
@@ -46,7 +46,7 @@
 
 		const [,,fromStr = ''] = from.url.pathname.split('/')
 		const [,,toStr = ''] = to.url.pathname.split('/')
-		if (!isFaceURL(fromStr) || !isFaceURL(toStr) || fromStr === toStr) {
+		if (!isColor(fromStr) || !isColor(toStr) || fromStr === toStr) {
 			info = {
 				type: 'preserveScroll',
 				scrollY: window.scrollY
@@ -54,8 +54,8 @@
 			return
 		}
 
-		const [x1, y1] = directionMap[fromStr]
-		const [x2, y2] = directionMap[toStr]
+		const [x1, y1] = colorPositions[fromStr]
+		const [x2, y2] = colorPositions[toStr]
 
 		if (y1 === y2) {
 			info = {

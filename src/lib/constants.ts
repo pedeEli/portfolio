@@ -9,6 +9,8 @@ export const positions = {
 	red: { top: FILE_SIZE, left: FILE_SIZE * 2 }
 }
 
+export const colors = ['blue', 'orange', 'yellow', 'green', 'white', 'red'] as const
+
 export const colorToUrl: Record<Color, SideUrl> = {
 	blue: '',
 	orange: 'navigation',
@@ -60,15 +62,13 @@ export const colorInfos: Record<
 	}
 }
 
-export const directionMap: Record<SideUrl, [x: number, y: number]> = {
-	'': [1, 0],
-	navigation: [1, 1],
-	'about-this-page': [1, 2],
-	'about-me': [0, 1],
-	projects: [2, 1],
-	imprint: [3, 1]
+export const colorPositions: Record<Color, [x: number, y: number]> = {
+	blue: [1, 0],
+	orange: [1, 1],
+	green: [1, 2],
+	yellow: [0, 1],
+	white: [2, 1],
+	red: [3, 1]
 }
 
-export const isFaceURL = (str: string): str is SideUrl => {
-	return str in directionMap
-}
+export const isColor = (str: string): str is Color => colors.includes(str as any)
