@@ -1,13 +1,11 @@
 <script lang="ts">
-  import Faces from '$lib/Faces.svelte'
-  import About from './About.svelte'
-  import Arrow from '$lib/Arrow.svelte'
-  import {colorInfos} from '$lib/constants'
+	import Faces from '$lib/Faces.svelte'
+	import About from './About.svelte'
+	import { colorInfos } from '$lib/constants'
 
-  const color = colorInfos.green
+	const color = colorInfos.green
 </script>
 
 <Faces classes="{color.bg} {color.txt}">
-  <About/>
+	<About />
 </Faces>
-<Arrow bgColor={color.btn} side={2} href="navigation"/>
