@@ -26,5 +26,8 @@
 	<p class="max-w-2xl mx-4 text-center text-[max(1rem,2vw)]">
 		{i18n.LL.welcomeInstruction}
 	</p>
-	<div class="p-[6vw]" />
+	<a
+		class="text-4xl m-8 p-8 border-4 rounded-full hover:scale-110 transition-transform"
+		href="/{i18n.locale}/navigation">{i18n.LL.navigation}</a
+	>
 </div>
