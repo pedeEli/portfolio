@@ -35,7 +35,7 @@
 		return element.animate([
 			{ position: 'absolute', left: `${x1}px`, top: `${y1}px` },
 			{ position: 'absolute', left: `${x2}px`, top: `${y2}px` }
-		], { duration: 400, easing: 'ease-in-out' })
+		], { duration: 600, easing: 'ease-in-out' })
 	}
 
 	beforeNavigate(({ from, to }) => {

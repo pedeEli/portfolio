@@ -2,7 +2,14 @@
 	import { colorInfos, colorToUrl } from '$lib/constants'
 	import i18n from '$i18n/utils.svelte'
 
-	const entries = Object.entries(colorInfos) as [Color, (typeof colorInfos)[Color]][]
+	const colors: Color[] = [
+		'blue',
+		'yellow',
+		'orange',
+		'white',
+		'red',
+		'green'
+	]
 </script>
 
 <div class="w-full h-full flex flex-col items-center">
@@ -13,18 +20,21 @@
 		<div class="text-[4vw] grid items-end p-[1.2vw]" style="grid-area: title">
 			{i18n.LL.minimap}
 		</div>
-		{#each entries as [name, color] (name)}
-			{@const url = colorToUrl[name]}
-			<a
-				class="{color.bg} {color.txt} aspect-square grid place-items-center text-center select-none"
-				style="grid-area: {name}; font-size: {i18n.LL.minimapFontSize}"
-				href="/{i18n.locale}/{url}"
-			>
-				{i18n.LL[url]}
-			</a>
+		{#each colors as color (color)}
+			{@render tile(colorToUrl[color], colorInfos[color].bg, colorInfos[color].txt, color)}
 		{/each}
 	</div>
 </div>
+
+{#snippet tile(url: SideUrl, bg: string, color: string, name: Color)}
+	<a
+		class="{bg} {color} aspect-square grid place-items-center text-center select-none outline-4 -outline-offset-2 outline-zinc-900 outline"
+		style="grid-area: {name}; font-size: {i18n.LL.minimapFontSize}"
+		href="/{i18n.locale}/{url}"
+	>
+		{i18n.LL[url]}
+	</a>
+{/snippet}
 
 <style lang="postcss">
 	.minimap {
