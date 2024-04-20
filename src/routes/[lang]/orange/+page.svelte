@@ -1,15 +1,31 @@
 <script lang="ts">
+	import { beforeNavigate } from '$app/navigation'
 	import facelets from '$lib/navigation'
 	import { colorInfos } from '$lib/constants'
 
 	const color = colorInfos.orange
+	let ref = $state<HTMLElement>()
+
+	beforeNavigate(() => {
+		if (ref == undefined) {
+			return
+		}
+
+		for (const child of ref.children) {
+			if (child instanceof HTMLElement) {
+				const style = getComputedStyle(child, ':before')
+				child.style.setProperty('--opacity', style.opacity.toString())
+				child.classList.remove('animate')
+			}
+		}
+	})
 </script>
 
-<div class="grid grid-cols-3 grid-rows-3 w-screen h-[100vw]">
+<div class="grid grid-cols-3 grid-rows-3 w-screen h-[100vw]" bind:this={ref}>
 	{#each facelets as Facelet (Facelet)}
 		<div
 			class="
-				facelet {color.txt} {color.bg} overflow-hidden relative
+				facelet animate {color.txt} {color.bg} overflow-hidden relative
 				before:absolute before:inset-0 before:pointer-events-none {Math.random() > 0.5
 				? 'before:bg-white'
 				: 'before:bg-black/70'}"
@@ -25,7 +41,9 @@
 
 <style lang="postcss">
 	.facelet::before {
-		opacity: 0;
+		opacity: var(--opacity, 0);
+	}
+	.animate::before {
 		animation: shimmer var(--duration) linear var(--delay) infinite alternate;
 	}
 	@keyframes shimmer {
