@@ -1,28 +1,16 @@
 <script lang="ts">
-	import { colorInfos } from '$lib/constants'
 	import i18n from '$i18n/utils.svelte'
-
-	const colors: Color[] = [
-		'blue',
-		'yellow',
-		'orange',
-		'white',
-		'red',
-		'green'
-	]
+	import { colorInfos } from '$lib/constants'
 </script>
 
-<div class="w-full h-full flex flex-col items-center">
-	<div class="p-[5vw]" />
+<div class="p-[1vw]" />
+<div class="grid justify-center">
 	<h1 class="text-[15vw]">{i18n.LL.orange}</h1>
-	<div class="p-[3vw]" />
+</div>
+
+<div class="absolute grid justify-center content-center inset-0 translate-y-[33.33vw]">
 	<div class="minimap grid w-[60vw]">
-		<div class="text-[4vw] grid items-end p-[1.2vw]" style="grid-area: title">
-			{i18n.LL.minimap}
-		</div>
-		{#each colors as color (color)}
-			{@render tile(color, colorInfos[color].bg, colorInfos[color].txt, color)}
-		{/each}
+		{@render tile('blue', colorInfos.blue.bg, colorInfos.blue.txt, 'blue')}
 	</div>
 </div>
 

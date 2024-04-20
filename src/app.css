@@ -10,3 +10,7 @@ html {
 	-ms-overflow-style: none;
 	scrollbar-width: none;
 }
+
+* {
+	user-select: none;
+}

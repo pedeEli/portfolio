@@ -2,20 +2,10 @@
 	import { colorInfos } from '$lib/constants'
 	import i18n from '$i18n/utils.svelte'
 
-	const colors: Color[] = [
-		'blue',
-		'yellow',
-		'orange',
-		'white',
-		'red',
-		'green'
-	]
+	const colors: Color[] = ['blue', 'yellow', 'orange', 'white', 'red', 'green']
 </script>
 
-<div class="w-full h-full flex flex-col items-center">
-	<div class="p-[5vw]" />
-	<h1 class="text-[15vw]">{i18n.LL.orange}</h1>
-	<div class="p-[3vw]" />
+<div class="grid justify-center content-center h-full">
 	<div class="minimap grid w-[60vw]">
 		<div class="text-[4vw] grid items-end p-[1.2vw]" style="grid-area: title">
 			{i18n.LL.minimap}
