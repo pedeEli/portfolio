@@ -6,5 +6,4 @@ export const load: LayoutLoad = ({ data }) => {
 	loadedLocales[data.locale] = data.LL
 	i18n.locale = data.locale
 	i18n.LL = data.LL
-	return data
 }

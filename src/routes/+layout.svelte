@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte'
-	import type { LayoutData } from './$types'
 
 	import Transition from '$lib/Transition.svelte'
 	import '../app.css'
@@ -9,10 +8,9 @@
 	import { locales } from '$i18n/utils'
 
 	type Props = {
-		data: LayoutData
 		children: Snippet
 	}
-	let { children, data }: Props = $props()
+	let { children }: Props = $props()
 </script>
 
 <main class="h-screen grid place-items-center">

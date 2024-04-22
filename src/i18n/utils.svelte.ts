@@ -9,6 +9,7 @@ export const setLocale = async (locale: Locale) => {
 	} else {
 		info.LL = await loadLocale(locale)
 	}
+	info.locale = locale
 	if (browser) {
 		document.querySelector('html')?.setAttribute('lang', locale)
 		const [, , ...rest] = location.pathname.split('/')
